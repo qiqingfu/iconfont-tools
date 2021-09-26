@@ -41,9 +41,16 @@ export const exitDir = <Promise>(filePath: string) => {
   })
 }
 
-export const mkdir = <Promise>(path: string) => {
+/**
+ * 根据给定的 path，创建新的目录
+ * @param path
+ */
+export const mkdir = <Promise>(filePath: string) => {
   return new Promise(resolve => {
-    fs.mkdir(path, { recursive: true }, err => {
+    /**
+     * 异步地创建目录
+     */
+    fs.mkdir(filePath, { recursive: true }, err => {
       if (err) {
         return resolve(false)
       }
@@ -52,10 +59,10 @@ export const mkdir = <Promise>(path: string) => {
   })
 }
 
-export const rmdir = <Promise>(path: string) => {
+export const rmdir = <Promise>(filePath: string) => {
   return new Promise(resolve => {
     try {
-      rimraf.sync(path)
+      rimraf.sync(filePath)
       resolve(true)
     } catch (error) {
       resolve(false)
@@ -72,10 +79,15 @@ export const mkFile = <Promise>(path: string, content: string) => {
     }
   })
 }
-export const readFile = <Promise>(path: string) => {
+
+/**
+ * 读取指定文件的内容
+ * @param path
+ */
+export const readFile = <Promise>(filePath: string) => {
   return new Promise(resolve => {
     try {
-      const content = fs.readFileSync(path, 'utf-8')
+      const content = fs.readFileSync(filePath, 'utf-8')
       resolve(content)
     } catch (error) {
       resolve(false)
@@ -116,7 +128,9 @@ export async function generatePath(flPath: string) {
   if (!isDir) {
     console.log(`对不起，输出目录${targetPath}不存在！`)
     const createSuccess = await mkdir(targetPath)
-    if (!createSuccess) throw new Error(`目录${targetPath}创建失败`)
+    if (!createSuccess) {
+      throw new Error(`目录${targetPath}创建失败`)
+    }
     console.log(`目录${targetPath}创建成功`)
   }
   return targetPath

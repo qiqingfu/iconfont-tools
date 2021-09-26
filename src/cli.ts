@@ -89,6 +89,9 @@ const inquirerHandler = async () => {
     path = await generatePath(paramsToPath)
   }
 
+  /**
+   * 获取用户命令行交互的数据
+   */
   const { dirName } = await inquirer.prompt({
     type: 'input',
     name: 'dirName',

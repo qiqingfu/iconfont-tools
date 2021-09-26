@@ -28,6 +28,10 @@ export class Extract {
   }
 
   async getIconfontContentByDown(url: string) {
+    /**
+     * //at.alicdn.com/t/font_2819266_nafd0i0j22o.js
+     * 如果是以 // 开头的，加上 https: 协议名
+     */
     url = url.indexOf('//') === 0 ? `https:${url}` : url
     const { data } = await axios.get(url).catch(() => {
       throw new Error(`对不起请求iconfont.js文件错误，请检查链接地址：${url}`)
