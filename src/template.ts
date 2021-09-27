@@ -63,9 +63,24 @@ export const generateWxss = async (path: string, fileName: string) => {
   return wxssPath
 }
 
+/**
+ * 生成微信小程序 icon 组件
+ * @param path
+ * @param icon
+ * @param fileName
+ */
 export const component = async (path: string, icon: string, fileName: string) => {
+  /**
+   * 删除 icon 组件目录
+   */
   await utils.rmdir(path)
+  /**
+   * 创建新的 icon 组件目录
+   */
   await utils.mkdir(path)
+  /**
+   * 并行创建 js、json、wxml、wxss 文件
+   */
   const files = await Promise.all([
     generateJs(path),
     generateJson(path),

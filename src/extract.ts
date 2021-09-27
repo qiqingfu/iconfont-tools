@@ -17,10 +17,18 @@ export class Extract {
     this.targetFile = `${path}/${dirName}/${fileName}`
   }
 
+  /**
+   * 将生成的 css 设置给 content
+   */
   setContent(content: string) {
     this.content = content
   }
 
+  /**
+   * 生成一系列要产出的目录文件
+   * 1. 创建生成的目录，如果目录已存在，则清空目录中的所有文件
+   * 2. 生成 css 文件、wxss 文件
+   */
   async generate() {
     await this.generateDir()
     const target = await this.generateStyle()
@@ -47,6 +55,9 @@ export class Extract {
     return content
   }
 
+  /**
+   * 生成样式文件
+   */
   async generateStyle() {
     const { targetFile } = this
     const cssState = await utils.mkFile(`${targetFile}.css`, this.content)
@@ -60,9 +71,19 @@ export class Extract {
     return `${targetFile}.css`
   }
 
+  /**
+   * 生成目录
+   */
   async generateDir() {
     const { targetDir } = this
+    /**
+     * 删除指定的目录
+     */
     await this.clearDir()
+
+    /**
+     * 创建新的目录
+     */
     const mk = await utils.mkdir(targetDir)
     if (!mk) {
       throw new Error(`创建文件夹：${targetDir} 失败`)
@@ -72,7 +93,11 @@ export class Extract {
 
   async clearDir() {
     const { targetDir } = this
+    // 检查 targerDir 目录是否存在
     const exit = await utils.exitDir(targetDir)
+    /**
+     * 如果目录存在，则删除
+     */
     if (exit) {
       const delState = await utils.rmdir(targetDir)
       if (!delState) {

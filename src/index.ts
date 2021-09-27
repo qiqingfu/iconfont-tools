@@ -35,9 +35,15 @@ export const create = async <Promise>(opt: OPT) => {
     .generateSvg()
     .generateCss()
 
+  /**
+   *
+   */
   ex.setContent(mat.css)
   const filePath = await ex.generate()
 
+  /**
+   * 生成小程序原生组件
+   */
   if (opt.component) {
     const componentPath = `${ex.targetDir}/icon`
     await component(componentPath, icon, fileName)

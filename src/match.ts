@@ -134,7 +134,6 @@ export class Match {
     this.svgs.forEach(({ name, svg }) => {
       this.css += generateStyleClass(name, svg)
     })
-    console.log(this.css)
     return this
   }
   setContent(content: string): Match {

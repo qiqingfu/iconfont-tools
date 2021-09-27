@@ -4,6 +4,7 @@
  * https://www.npmjs.com/package/chalk
  */
 import chalk from 'chalk'
+import { dir } from 'console'
 /**
  * 脚手架终端的交互式命令行
  * https://github.com/SBoudrias/Inquirer.js

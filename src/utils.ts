@@ -61,18 +61,25 @@ export const mkdir = <Promise>(filePath: string) => {
 
 export const rmdir = <Promise>(filePath: string) => {
   return new Promise(resolve => {
-    try {
-      rimraf.sync(filePath)
-      resolve(true)
-    } catch (error) {
-      resolve(false)
-    }
+    rimraf(filePath, err => {
+      if (err) {
+        resolve(false)
+      } else {
+        resolve(true)
+      }
+    })
   })
 }
-export const mkFile = <Promise>(path: string, content: string) => {
+
+/**
+ * 将指定的内容写入文件
+ * @param filePath
+ * @param content
+ */
+export const mkFile = <Promise>(filePath: string, content: string) => {
   return new Promise(resolve => {
     try {
-      fs.writeFileSync(path, content)
+      fs.writeFileSync(filePath, content)
       resolve(true)
     } catch (error) {
       resolve(false)
@@ -123,7 +130,7 @@ export async function generatePath(flPath: string) {
   const isDir = await exitDir(targetPath)
 
   /**
-   * 目录不存在
+   * 如果要生成的目录不存在的话，就给用户创建
    */
   if (!isDir) {
     console.log(`对不起，输出目录${targetPath}不存在！`)
