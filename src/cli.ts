@@ -62,7 +62,7 @@ const inquirerHandler = async () => {
   const { icon } = await inquirer.prompt({
     type: 'input',
     name: 'icon',
-    message: '设置css文件的prefix：',
+    message: '设置css文件的icon prefix：',
     default: DEFAULT_OPTION.icon,
   })
   const { fontSize } = await inquirer.prompt({
@@ -81,10 +81,10 @@ const inquirerHandler = async () => {
   return {
     iconfontUrl,
     path,
-    dirName,
-    fileName,
-    fontSize,
-    icon,
+    dirName: dirName || DEFAULT_OPTION.dirName,
+    fileName: fileName || DEFAULT_OPTION.fileName,
+    fontSize: fontSize || DEFAULT_OPTION.fontSize,
+    icon: icon || DEFAULT_OPTION.icon,
     component,
   }
 }
